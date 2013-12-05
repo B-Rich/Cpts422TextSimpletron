@@ -145,7 +145,6 @@ void Simpletron::decode ()
 {
 	mOpcode = mInstructionRegister.getOpcode ();
 	mOperand = mInstructionRegister.getOperand ();
-	mInstructionCounter++;
 }
 
 // Carry out the appropriate operation based on the opcode
