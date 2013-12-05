@@ -6,6 +6,7 @@
 #include "SmlInstruction.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cmath>
 #include <cstdlib>
@@ -18,7 +19,7 @@ using std::string;
 class Simpletron
 {
 	public:
-		Simpletron (int newProgramSize = 1000, int newDataSize = 1000);
+		Simpletron (int newProgramSize = 1000, int newDataSize = 26214400);
 		~Simpletron ();
 
 		Simpletron & operator= (const Simpletron &rhs);

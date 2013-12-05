@@ -36,8 +36,8 @@ void SimApp::loadProgram (ifstream &inStream)
 	while (!inStream.eof ())
 	{
 		std::getline (inStream, instruction);
-		tempPtr[index].setOpcode ((OpcodeType) (atoi (instruction.c_str ()) / mSmlComputer.getDataSize ()));
-		tempPtr[index].setOperand ((atoi (instruction.c_str ()) % mSmlComputer.getDataSize ()));
+		tempPtr[index].setOpcode ((OpcodeType) (atoi (instruction.c_str ()) / 1000));
+		tempPtr[index].setOperand ((atoi (instruction.c_str ()) % 1000));
 		index++;
 	}
 

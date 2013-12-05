@@ -171,25 +171,46 @@ void Simpletron::execute ()
 			           break;
 		case MOD: mAccumulator %= mDataMemoryPtr[mOperand];
 			      break;
-		case EXP: mAccumulator = (int) pow ((double) mDataMemoryPtr[mOperand], (double) mAccumulator);
+		case EXP: mAccumulator = (int) pow ((double) mAccumulator,(double) mDataMemoryPtr[mOperand]);
 			      break;
-		case BRANCH: mInstructionCounter = mAccumulator;
+		case LSHIFT:
+					mAccumulator = mAccumulator << mDataMemoryPtr[mOperand];
+					break;
+		case RSHIFT:
+					mAccumulator = mAccumulator >> mDataMemoryPtr[mOperand];
+					break;
+
+		case BRANCH: mInstructionCounter = mDataMemoryPtr[mOperand];
 			         break;
 		case BRANCHNEG: if (mAccumulator < 0)
 						{
-							mInstructionCounter = mOperand;
+							mInstructionCounter = mDataMemoryPtr[mOperand];
 						}
 			            break;
 		case BRANCHZERO: if (mAccumulator == 0)
 						 {
-							 mInstructionCounter = mOperand;
+							 mInstructionCounter = mDataMemoryPtr[mOperand];
 						 }
 			             break;
+		case BRANCHPOS: if (mAccumulator > 0)
+						 {
+							 mInstructionCounter = mDataMemoryPtr[mOperand];
+						 }
+			             break;
+		case NO_OP:
+			//do nothing for no_ops
+			break;
+		
 		case HALT: // done
 			       exit (0);
 			       break;
 		default: cout << "ERROR: Invalid instruction. Exiting program!" << endl;
-				 exit (1);
+				std::filebuf filebuff;
+				filebuff.open("invalidOpcode.log",std::ios::out);
+				std::ostream os(&filebuff);
+				os << mOpcode;
+				filebuff.close();
+				exit (1);
 			     break;
 	}
 
@@ -222,7 +243,7 @@ void Simpletron::dumpMemory ()
 
 
 	cout << "PROGRAM MEMORY:" << endl;
-	while ((index < (this->getProgramSize ())) && (tempPtr[index].getOpcode () != NO_OP))
+	while ((index < (this->getProgramSize ())))
 	{
 		cout << tempPtr[index++] << " ";
 		if ((index % 10) == 0)
