@@ -1,0 +1,6 @@
+Debug\*
+Debug/*
+*.vcxproj*
+*.vcproj*
+*.sln
+*.suo
